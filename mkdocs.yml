@@ -70,6 +70,7 @@ nav:
   - Project: 'index.md'
   - Documentation: 
     - Release Notes: 'trousseau/release_notes.md'
+    - Concepts: 'trousseau/concepts.md'
     - Architecture: 'trousseau/architecture.md'
     - Deployment: 'trousseau/deployment.md'
     - Operations: 'trousseau/operations.md'
