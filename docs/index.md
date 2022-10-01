@@ -3,7 +3,7 @@ Summary
 
 Trousseau is an open-source project, based on the [Kubernetes KMS provider design](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/), securing data sensitve objects, like Secrets and ConfigMap, within the Kubernetes etcd by using an envelope encryption scheme.   
 
-Trousseau is designed to be both a framework and a usable plugin to interact with any KMS provider (see [release notes](release_notes.md)).
+Trousseau is designed to be both a framework and a usable plugin to interact with any KMS provider (see [release notes](../trousseau/release_notes.md)).
 
 --- 
 Why   
