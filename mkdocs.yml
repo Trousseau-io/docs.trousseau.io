@@ -1,10 +1,10 @@
 site_name: docs.trousseau.io 
 site_url: https://docs.trousseau.io
 
-plugins:
-  - git-committers:
-      repository: trousseau-io/docs.trousseau.io
-      token: !ENV GH_TOKEN
+# plugins:
+#   - git-committers:
+#       repository: trousseau-io/docs.trousseau.io
+#       token: !ENV GH_TOKEN
 
 theme:
   font:
