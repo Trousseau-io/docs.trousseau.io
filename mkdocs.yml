@@ -1,0 +1,78 @@
+site_name: docs.trousseau.io 
+site_url: https://docs.trousseau.io
+
+plugins:
+  - git-committers:
+      repository: trousseau-io/docs.trousseau.io
+      token: !ENV GH_TOKEN
+
+theme:
+  font:
+    text: Red Hat Text
+    code: Red Hat Mono
+#  logo: images/ondat_logo_darkbg.png
+  features:
+    - content.code.annotate
+    - navigation.top
+  icon:
+    repo: fontawesome/brands/github
+  name: material
+  palette: 
+    - scheme: default
+      primary: white 
+      accent: blue 
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to dark mode
+    - scheme: slate 
+      primary: black 
+      accent: blue 
+      toggle:
+        icon: material/lightbulb
+        name: Switch to light mode
+extra_css: 
+  - stylesheets/extra.css
+extra:
+  social:
+    - icon: fontawesome/brands/github 
+      link: https://github.com/trousseau-io/docs.trousseau.io
+    - icon: fontawesome/brands/slack
+      link: https://storageos.slack.com/ 
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/trousseauio
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/trousseau-io/
+#    - icon: fontawesome/brands/youtube
+#      link: https://www.youtube.com/channel/UCWhaUE5K9RfkJVGrHys3xug
+  generator: true
+copyright: Copyright &copy; 2021 Trousseau-io. All righ reserved. 
+repo_url: https://github.com/trousseau-io/docs.trousseau.io
+repo_name: trousseau-io/docs.trousseau.io
+
+markdown_extensions:
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - admonition
+  - pymdownx.details
+  - def_list
+  - md_in_html
+  - pymdownx.snippets:
+      base_path: 'docs/'
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Project: 'index.md'
+  - Documentation: 
+    - Release Notes: 'trousseau/release_notes.md'
+    - Architecture: 'trousseau/architecture.md'
+    - Deployment: 'trousseau/deployment.md'
+    - Operations: 'trousseau/operations.md'
+  - Community & Media: 'trousseau/community.md'
+  - Contributing: 'contributing.md'
+  - Support: 'support.md'
