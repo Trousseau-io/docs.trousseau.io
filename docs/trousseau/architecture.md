@@ -38,7 +38,7 @@ Trousseau aims to provide support for multiple KMS providers. As per version 1.1
 | HashiCorp Vault (Community & Enterprise) | 1.x | :material-check-all: |
 | HashiCorp Cloud Vault Enterprise | n/a | :material-check-all: |
 
-## Architecture Diagram
+## Kubernetes KMS Provider Plugin Overview
 
 <!-- ![trousseau diagram](/images/trousseau-diagram.png) -->
 
@@ -49,8 +49,8 @@ graph LR
   C --2--> L(KMS Provider);
   L --3--> D(KMS Plugin);
   D --4--> E(KMS Server);
-  E --5--> D;
-  D --6--> L;
+  D --5--> L;
+  L --6--> C;
   C --7--> F(etcd);
 
   subgraph Kubernetes
@@ -61,30 +61,14 @@ graph LR
   end
 ```
 
-
-```mermaid
-graph LR
-  A(user) --> B[secret.yml];
-  B --1--> C(kube-api);
-  C --2--> D(Trousseau);
-  D --3--> E(Vault);
-  E --4--> D;
-  D --5--> C;
-  C --6--> F(etcd);
-
-  subgraph k8s
-    C
-    D
-    F
-  end
-```
-
-1. Create a secret
-2. kube-api calls Trousseau
-3. Trousseau sends the encryption request to the KMS provider
-4. The KMS provider returne the encrypted data to Trousseau
-5. Trousseau sends the encrypted data back to kube-api
-6. kube-api stores the encrypted resource in etcd
+0. An User or Application creates a Secret (a ConfigMap could also benefit)
+2. The Kubernetes API Server will request the KMS Provider to encrypt the Secret.  
+   The KMS Provider generates a DEK (Data Encryption Key) to encrypt the data field.
+3. The KMS Provider hands off the DEK to the KMS Plugin for encryption.
+4. The KMS Plugin leverage a KMS Server to encryp tthe DEK with a KEK (Key Encryption Key).
+5. The KMS Plugin returns to the KMS Provider the encrypted DEK with a KID (Key ID).
+6. The KMS Provider returns the encrypted DEK & KID to the API Server.
+7. The API Server stores the encrypted as a Secret the encrypted data field, encrypted DEK and KID.
 
 
 ## Workflow 
