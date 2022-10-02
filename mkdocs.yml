@@ -68,6 +68,9 @@ markdown_extensions:
 
 nav:
   - Project: 'index.md'
+  - Contributing: 
+    - Guidelines: 'contributing.md'
+    - Development: 'trousseau/dev.md'
   - Documentation: 
     - Release Notes: 'trousseau/release_notes.md'
     - Concepts: 'trousseau/concepts.md'
@@ -75,7 +78,4 @@ nav:
     - Deployment: 'trousseau/deployment.md'
     - Operations: 'trousseau/operations.md'
   - Community & Media: 'trousseau/community.md'
-  - Contributing: 
-    - Guidelines: 'contributing.md'
-    - Development: 'trousseau/dev.md'
   - Support: 'support.md'
