@@ -46,7 +46,7 @@ Trousseau aims to provide support for multiple KMS providers. As per version 1.1
 graph LR
   A(user/app) --0--> B[Secret];
   B --1--> C(API Server);
-  L --2--> M(KMS Provider);
+  C --2--> L(KMS Provider);
   L --3--> D(KMS Plugin);
   D --4--> E(KMS Server);
   E --5--> D;
