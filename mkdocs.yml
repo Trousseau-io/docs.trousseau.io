@@ -75,5 +75,7 @@ nav:
     - Deployment: 'trousseau/deployment.md'
     - Operations: 'trousseau/operations.md'
   - Community & Media: 'trousseau/community.md'
-  - Contributing: 'contributing.md'
+  - Contributing: 
+    - Guidelines: 'contributing.md'
+    - Development: 'trousseau/dev.md'
   - Support: 'support.md'
