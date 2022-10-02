@@ -10,7 +10,7 @@ theme:
   font:
     text: Red Hat Text
     code: Red Hat Mono
-  logo: images/logo-horizontal.svg
+  logo: images/logo-color-horizontal.svg
   features:
     - content.code.annotate
     - navigation.top
@@ -26,7 +26,7 @@ theme:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: white
+      primary: black
       accent: blue
       toggle:
         icon: material/brightness-7
