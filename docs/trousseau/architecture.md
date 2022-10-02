@@ -44,6 +44,26 @@ Trousseau aims to provide support for multiple KMS providers. As per version 1.1
 
 ```mermaid
 graph LR
+  A(user/app) -0-> B[Secret];
+  B --1--> C(API Server);
+  L --2--> M(KMS Provider);
+  L --3--> D(KMS Plugin);
+  D --4--> E(KMS Server);
+  E --5--> D;
+  D --6--> L;
+  C --7--> F(etcd);
+
+  subgraph Kubernetes
+    C
+    D
+    F
+    L
+  end
+```
+
+
+```mermaid
+graph LR
   A(user) --> B[secret.yml];
   B --1--> C(kube-api);
   C --2--> D(Trousseau);
