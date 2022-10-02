@@ -44,7 +44,7 @@ Trousseau aims to provide support for multiple KMS providers. As per version 1.1
 
 ```mermaid
 graph LR
-  A(user/app) -0-> B[Secret];
+  A(user/app) --0--> B[Secret];
   B --1--> C(API Server);
   L --2--> M(KMS Provider);
   L --3--> D(KMS Plugin);
