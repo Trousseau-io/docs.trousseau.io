@@ -10,7 +10,7 @@ theme:
   font:
     text: Red Hat Text
     code: Red Hat Mono
-#  logo: images/ondat_logo_darkbg.png
+  logo: images/logo-horizontal.svg
   features:
     - content.code.annotate
     - navigation.top
