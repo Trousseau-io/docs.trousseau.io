@@ -3,7 +3,8 @@ Summary
 
 Trousseau is an open-source Plugin for the [Kubernetes KMS provider](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/), securing data sensitve objects within etcd, like for Secret and ConfigMap objects, leveraging an external Key Management Service (KMS) server.   
 
-Trousseau is designed to be both a framework and a usable plugin to interact with any KMS server like:
+Trousseau is designed to be both a framework and a usable plugin to interact with any KMS server like: 
+
 - HashiCorp Vault (Community and Enterprise)
 - AWS KMS 
 - Azure KMS
@@ -13,9 +14,9 @@ Why
 
 Kubernetes platform users are all facing the very same question: how to handle Secrets?
 
-While there are significant efforts to improve Kubernetes component layers, [the state of Secret Management isn't receiving much interest](https://archive.fosdem.org/2021/schedule/event/kubernetes_secret_management/). Using etcd to store API object definition & states, Kubernetes secrets are encoded in base64 and shipped as-is into the key value store database. Even if the filesystem on which etcd runs is encrypted, the etcd entries are not.
+While using etcd to store API object defintions and their state, the Kubernetes secret sensitive data fields are encoded in base64 and shipped as-is into the key value store database. Even if the filesystem on which etcd runs is encrypted, the etcd entries are not.
 
-Not always considered as-is, Secrets are used by both platform components and applications. While the application secrets could be stored within an external Key Management Service (KMS), the platform components can't as they leverages the native Kubernetes API for Secrets management.   
+Not always considered, Secrets are used by both platform components and applications. While the application secrets could be stored within an external Key Management Service (KMS), the platform components can't as they leverages the native Kubernetes API for Secrets management.   
 This design pattern supports an open integration architecture along with standardization, scalability, and resilience.
 
 To support the above statment, let's consider the two caterogies:
