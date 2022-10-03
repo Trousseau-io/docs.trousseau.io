@@ -1,38 +1,86 @@
+# Kubernetes Secrets Management
 
-## Kubernetes KMS Provider Plugin Overview
+## Default behavior 
 
-<!-- ![trousseau diagram](/images/trousseau-diagram.png) -->
+Kubernetes is using a distributed key-value data store to record all API Objects definition along with their state and version. To ensure proper processing, data is encoded in base64 removing challenges with special characters.  
 
-```mermaid
-graph LR
-  A(user/app) --0--> B[Secret];
-  B --1--> C(API Server);
-  C --2--> L(KMS Provider);
-  L --3--> D(KMS Plugin);
-  D --4--> E(KMS Server);
-  D --5--> L;
-  L --6--> C;
-  C --7--> F(etcd);
+Same concept applies to Secret, especially leveraging special characters for extra security, for example:
 
-  subgraph Kubernetes
-    C
-    D
-    F
-    L
-  end
+``` title="secret.yml"
+--8<-- "trousseau/files/secret.yml"
 ```
 
-0. An User or Application creates a Secret (a ConfigMap could also benefit)
-2. The Kubernetes API Server will request the KMS Provider to encrypt the Secret.  
-   The KMS Provider generates a DEK (Data Encryption Key) to encrypt the data field.
-3. The KMS Provider hands off the DEK to the KMS Plugin for encryption.
-4. The KMS Plugin leverage a KMS Server to encryp tthe DEK with a KEK (Key Encryption Key).
-5. The KMS Plugin returns to the KMS Provider the encrypted DEK with a KID (Key ID).
-6. The KMS Provider returns the encrypted DEK & KID to the API Server.
-7. The API Server stores the encrypted as a Secret the encrypted data field, encrypted DEK and KID.
+The above base64 encoded values are ```admin``` and ```p@ssw0rd$```. 
 
+When creating the Secret with ```kubectl apply -f mysecret.yml```, the following flow will be triggered: 
 
-## Workflow 
+```mermaid
+sequenceDiagram
+participant User or App
+participant API Server
+participant etcd
+autonumber
+  User or App->>API Server: create Secret
+  Note right of User or App: base64 encoded sensitive data
+  API Server->>etcd: store Secret
+```
+
+When reading the Secret with ```kubectl get -n myapp secrets/mysecret -o yaml```, the following flow will be triggered:  
+
+```mermaid
+sequenceDiagram
+participant User or App
+participant API Server
+participant etcd
+autonumber
+  User or App->>API Server: request Secret
+  API Server->>etcd: recover Secret
+  API Server->>User or App: return Secret
+  Note left of API Server: base64 encoded sensitive data
+```
+
+### Threat assessment 
+Zero protection leading to full exposure of Secrets from file system, etcd data store, and Kubernetes API.
+
+## Kubernetes KMS Provider with external KMS
+
+The Kubernetes API Server can encrypt the sensitve data from Secrets using the KMS Provider. In this scenario, an external KMS is used to encrypt in-flight the Data Encryption Key using to encrypt the sensitive data. This process is called an encryption envelop scheme.   
+
+When creating the Secret with ```kubectl apply -f mysecret.yml```, the following flow will be triggered: 
+
+```mermaid
+sequenceDiagram
+participant User or App
+participant etcd
+participant API Server
+participant KMS Provider
+participant KMS Plugin
+participant KMS Server
+autonumber
+  User or App->>API Server: create Secret
+  API Server->>KMS Provider: request to encrypt Secret
+  Note left of KMS Provider: generate a DEK
+  Note left of KMS Provider: encrypt Secret
+  KMS Provider->>KMS Plugin: hand off the DEK for encryption
+  KMS Plugin->>KMS Server: encrypt DEK with KEK from KMS
+  KMS Plugin->>KMS Provider: return encrypted DEK with KID
+  KMS Provider->>API Server: return encrypted DEK with KID
+  API Server->>etcd: store Secrets and DEK both encrypted
+```
+
+### Threat assessment 
+This approach mitigates:
+
+- attacker accessing the file system as root
+- attacker accessing the etcd data store (etcd being compromised)
+- attacker accessing the API Server still requires the KEK hosted on the remote KMS 
+- offline copy of etcd data store requires KEK for decryption of DEKs to decrypt Secrets
+
+This approach does not mitigate:
+
+- attacker accessing the API Server memory allocation can read DEKs recently cached
+
+## Trousseau Deployment Workflow 
 
 ### Kubernetes & Vault Configuration
 ```mermaid
