@@ -10,9 +10,7 @@ Same concept applies to Secret, especially leveraging special characters for ext
 --8<-- "trousseau/files/secret.yml"
 ```
 
-The above base64 encoded values are ```admin``` and ```p@ssw0rd$```. 
-
-When creating the Secret with ```kubectl apply -f mysecret.yml```, the following flow will be triggered: 
+The above base64 encoded values are ```admin``` and ```p@ssw0rd$```. When creating the Secret with ```kubectl apply -f mysecret.yml```, the following flow will be triggered: 
 
 ```mermaid
 sequenceDiagram
