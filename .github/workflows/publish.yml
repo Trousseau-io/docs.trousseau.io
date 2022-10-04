@@ -15,6 +15,7 @@ jobs:
       - run: pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git
       - run: pip install mkdocs-diagrams 
       - run: pip install mkdocs-git-committers-plugin-2
+      - run: pip install mkdocs-git-authors-plugin
       - run: mkdocs gh-deploy --force
 env:
   GH_TOKEN: ${{ secrets.INSIDERS }}
