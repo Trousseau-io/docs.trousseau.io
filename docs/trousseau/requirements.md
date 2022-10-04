@@ -12,8 +12,10 @@ Here are the requirements based on the environment type:
 
 Create a secret to verify Trousseau's deployment
 
+``` title="pre-deploy-secret.yml"
 --8<-- "trousseau/files/pre-deploy-secret.yml"
-
 ```
+
+```bash
 kubectl create pre-deploy-secret.yml
 ```
