@@ -1,5 +1,16 @@
+## KMS Server Support
+
+| Trousseau | AWS KMS | Azure KMS | HashiCorp Vault |
+|-----------|---------|-----------|-----------------|
+| v1.x | :material-close: | :material-close: | :material-check-all: |
+| v2.x | :material-check-all: | :material-check-all: | :material-check-all: |
+
 !!! tip 
     For the latest and greatest news about Trousseau's releases, please consult [GitHub Releases](https://github.com/ondat/trousseau/releases).
+
+## **Trousseau v2** 
+
+TBA
 
 ## **Trousseau v1** 
 
@@ -29,14 +40,14 @@
     ```
 
 ### Wafer Cookie
-!!! note "Release notes - v1.1.2"
+??? note "Release notes - v1.1.2"
     This minor version is a code cleaning and polishing release including:  
     - a fix for CVE-2021-38561  
     - an end-2-end workflow review 
 
     [Git Compare with previous version](https://github.com/ondat/trousseau/compare/v1.1.0...v1.1.2)
 
-!!! info "What's Changed"
+??? info "What's Changed"
     ```
     * bump google.golang.org/grpc from 1.38.0 to 1.45.0 #63 
     * Fix code scanning alert - CVE-2021-38561 Package: golang.org/x/text #64 
@@ -47,7 +58,7 @@
     * Polish Go lint errors by @mhmxs in #82 
     ```
 
-!!! example "How to use"
+??? example "How to use"
     Replace the image parameter within the DaemonSet with either: 
     ```
     ghcr.io/ondat/trousseau:1ad8e11fbcd4f4c7f2587200dd8eca620fed4a5e
@@ -55,7 +66,7 @@
     ```
 
 ### Bad Batch Cookie 
-!!! danger "Release notes - v1.1.1"
+??? danger "Release notes - v1.1.1"
     The release has been removed as part of a discovered CVE.   
     Code change has been addressed in v1.1.2 and container registry has been cleaned up.    
 
@@ -64,14 +75,14 @@
     [Git Compare with previous version](https://github.com/ondat/trousseau/compare/v1.1.0...v1.1.1)
 
 ### Chocolate Chip Funny Cookie 
-!!! note "Release notes - v1.1.0"
+??? note "Release notes - v1.1.0"
     We are please to release the first update of version 1.0.0 adding chocolate chips on the original 'Funny Cookie'.   
 
     **Thanks to @mhmxs @hubvu @vfiftyfive and @cannischan for your contributions!**
 
     [Git Compare with previous version](https://github.com/ondat/trousseau/compare/v1.0.0...v1.1.0)
 
-!!! info "What's Changed"
+??? info "What's Changed"
     ```
     - Code polishing and optimisations #41 - Thanks to @mhmxs 
     - Module import update due to move to Ondat organization repository #44 
@@ -84,7 +95,7 @@
     - Introduction of UBI and Ubuntu container image based debug options #39 
     ```
 
-!!! example "How to use"
+??? example "How to use"
     Replace the image parameter within the DaemonSet with either: 
     ```
     ghcr.io/ondat/trousseau:1ad8e11fbcd4f4c7f2587200dd8eca620fed4a5e
@@ -92,14 +103,14 @@
     ```
 
 ### Funny Cookie
-!!! note "Release notes - v1.0.0"
+??? note "Release notes - v1.0.0"
     Funny Cookie' is out of the box!   
     We are please to release the very first version of Trousseau this December 1st 2021!  
     Trousseau is a Kubernetes KMS Provider plugin with support of Hashicorp Vault.   
 
     **The Trousseau Project would like to thanks @wwojcik and @kruc for their precious contributions!** 
  
-!!! info "The current release offers the followings"
+??? info "The current release offers the followings"
     ```
     * respectful of the Kubernetes KMS Provider framework
     * provide support for Hashicorp Vault Community, Enterprise and Cloud Platform based deployment
@@ -107,10 +118,10 @@
     * build on distroless for small footprint 
     ```
 
-!!! warning
+??? warning
     The current release contains a security warning from gosec that will be address in point release:
     - https://github.com/Trousseau-io/trousseau/issues/15
 
-!!! example "How to use"
+??? example "How to use"
     The complementary asset is the container image accessible via the tag ```latest``` or ```v1.0.0```  
     Following the Deployment documentation.
