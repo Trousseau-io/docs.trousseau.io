@@ -61,6 +61,20 @@ autonumber
 
 [External Secrets Operator](https://external-secrets.io/) (or ESO) project allows to recover secrets from a KMS server and inject them as native Secrets within Kubernetes, or in other words, base64 encoded and not encrypted.
 
+ESO uses two custom resource API objects: SecretStore and ExternalSecret.
+
+The SecretStore provides access to a remote KMS server:
+
+``` title="secretstore.yml"
+--8<-- "trousseau/files/secretstore.yml"
+```
+
+The ExternalSecret identifies the secrets to fetch from an existing SecretStore and inject them as native Kubernetes Secrets:
+
+``` title="secretstore.yml"
+--8<-- "trousseau/files/externalsecret.yml"
+```
+
 ```mermaid
 sequenceDiagram
 participant User or App
