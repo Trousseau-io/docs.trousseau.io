@@ -91,16 +91,17 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
 
 nav:
-  - Project: 'index.md'
+  - About: 'index.md'
+  - Release notes: 'trousseau/release_notes.md'
+  - Architecture:
+    - Concepts: 'trousseau/concepts.md'
+    - Secrets Management: 'trousseau/secretmanagement.md'
+    - Troussseau Architecture: 'trousseau/architecture.md'
+  - Documentation: 
+    - Deployment: 'trousseau/deployment.md'
+    - Operations: 'trousseau/operations.md'
   - Contributing: 
     - Guidelines: 'contributing.md'
     - Development: 'trousseau/dev.md'
-  - Documentation: 
-    - Release Notes: 'trousseau/release_notes.md'
-    - Concepts: 'trousseau/concepts.md'
-    - Secrets Management: 'trousseau/secretmanagement.md'
-    - Architecture: 'trousseau/architecture.md'
-    - Deployment: 'trousseau/deployment.md'
-    - Operations: 'trousseau/operations.md'
-  - Community & Media: 'trousseau/community.md'
+  - References: 'trousseau/community.md'
   - Support: 'support.md'
