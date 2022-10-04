@@ -1,6 +1,18 @@
 # Kubernetes Secrets Management
 
-## Default behavior 
+## Treat Modeling 
+
+                                          
+| Methode                                    | Disk | RAM | etcd | API Server | KMS Server |
+|--------------------------------------------|------|-----|------|------------|------------| 
+| Native                                     | :material-close: | :material-close: | :material-close: | :material-close: | :material-close: |
+| File System Encryption                     | :material-check: | :material-close: | :material-close: | :material-close: | :material-close: |
+| [External Secrets Operator](https://external-secrets.io/) | :material-close: | :material-close: | :material-close: | :material-close: | :material-check: [1] |
+| [SOPS](https://github.com/mozilla/sops)    | :material-close: | :material-close: | :material-close: | :material-close: | :material-check: [2] |
+| KMS Provider Encryption at rest            | :material-close: | :material-close: | :material-check: | :material-close: | :material-close: |
+| KMS Provider with Plugin for external KMS  | :material-check: | :material-check: [3] | :material-check: | :heavy_check_mark: [4] | :material-check: [5] |
+
+## Native Kubernetes Default Behavior
 
 Kubernetes is using a distributed key-value data store to record all API Objects definition along with their state and version. To ensure proper processing, data is encoded in base64 removing challenges with special characters.  
 
@@ -39,6 +51,10 @@ autonumber
 
 ### Threat assessment 
 Zero protection leading to full exposure of Secrets from file system, etcd data store, and Kubernetes API.
+
+
+## 
+
 
 ## Kubernetes KMS Provider with external KMS
 
