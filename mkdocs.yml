@@ -2,9 +2,12 @@ site_name: Documentation
 site_url: https://docs.trousseau.io
 
 plugins:
+  - git-revision-date-localized:
+      enable_creation_date: true
   - git-authors
-#   - git-committers:
-#       repository: trousseau-io/docs.trousseau.io
+  - git-committers:
+      repository: trousseau-io/docs.trousseau.io
+      branch: main 
 #       token: !ENV GH_TOKEN
 
 theme:
