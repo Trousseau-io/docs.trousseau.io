@@ -101,8 +101,12 @@ nav:
     - Secrets Management: 'trousseau/secretmanagement.md'
     - Troussseau Architecture: 'trousseau/architecture.md'
   - Installing:
+    - Requirements: 'trousseau/requirements.md'
     - Disconnected: 'trousseau/disconnected.md'
-    - Deployment: 'trousseau/deployment.md'
+    - Installing with HashiCorp Vault: 
+      - Overview: 'trousseau/overview.yml'
+      - Setup HashiCorp Vault: 'trousseau/setup-hashicorp-vault.yml' 
+      - Deploying Trousseau: 'trousseau/deployment.md'
     - Operations: 'trousseau/operations.md'
   - Contributing: 
     - Guidelines: 'contributing.md'
