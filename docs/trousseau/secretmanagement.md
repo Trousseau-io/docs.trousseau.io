@@ -1,8 +1,8 @@
 # Kubernetes Secrets Management
 
-## Treat Modeling 
+## Threat Modeling 
 
-The below table is providing a holistic view of the different Secret Management implementation and the mitigation when:
+The below table is providing a holistic view of the different Secret Management implementation and their mitigations against Kubernetes internal and external components.
 
 !!! info "Legend"  
     - :material-close: used when does not mitigate the related component
