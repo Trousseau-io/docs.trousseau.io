@@ -70,6 +70,7 @@ extra:
 copyright: Copyright &copy; 2021 Trousseau-io. All righ reserved. 
 repo_url: https://github.com/trousseau-io/docs.trousseau.io
 repo_name: trousseau-io/docs.trousseau.io
+edit_uri: edit/main/docs/
 
 markdown_extensions:
   - attr_list
