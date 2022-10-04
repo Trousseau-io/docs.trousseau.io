@@ -2,12 +2,12 @@
 
 ## Treat Modeling 
 
-The below table is providing a holistic view of the different Secret Management implementation and the mitigation of:
+The below table is providing a holistic view of the different Secret Management implementation and the mitigation when:
 
 - ```Disk```; if control plane node disk is compromised online (access to the node) or offline (access to a copy/backup)
 - ```RAM```; if the memory allocation is compromised online (via a process like the API Server) or offline (memory dump from backup)
 - ```etcd```; if the etcd data store is compromised (access via etcdctl) or offline (access to a copy/backup)
-- ```KMS server```; if KMS server is compromised 
+- ```KMS server```; if Key Management Service server is compromised 
                                           
 | Implementation | Disk :material-harddisk: | RAM :material-memory: | etcd :material-database: | KMS server :material-server: |
 |--------------------------------------------|------|-----|------|------------| 
@@ -73,6 +73,8 @@ autonumber
 ```
 
 ## External Secrets Operator
+
+[External Secrets Operator](https://external-secrets.io/) project allows to recover secrets from a KMS server and inject them as native Secrets within Kubernetes.
 
 ## KMS Provider with Encryption at rest
 
