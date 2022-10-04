@@ -27,12 +27,14 @@ The below table is providing a holistic view of the different Secret Management 
     - [3] if the KMS is compromised, the DEKs can be decrypted allowing to decrypt the Secrets. Mitigation would be required to lockdown the platform.
 
 
-## File System Encryption
+## Implementations
+
+### File System Encryption
 
 This is referring to encrypt the file system on which the etcd database would deployed and running. Please refer to your Linux and Kubernetes distribution for specifics and how-to (e.g. [Linux Encrypted Filesystem with dm-crypt
 ](https://wiki.centos.org/HowTos/EncryptedFilesystem) or [How To Linux Hard Disk Encryption With LUKS](https://www.cyberciti.biz/security/howto-linux-hard-disk-encryption-with-luks-cryptsetup-command/)).
 
-## Native Kubernetes Secrets
+### Native Kubernetes Secrets
 
 Kubernetes is using a distributed key-value data store to record all API Objects definition along with their state and version. To ensure proper processing, data is encoded in base64 removing challenges with special characters.  
 
@@ -55,25 +57,11 @@ autonumber
   API Server->>etcd: store Secret
 ```
 
-When reading the Secret with ```kubectl get -n myapp secrets/mysecret -o yaml```, the following flow will be triggered:  
-
-```mermaid
-sequenceDiagram
-participant User or App
-participant etcd
-participant API Server
-autonumber
-  User or App->>API Server: request Secret
-  API Server->>etcd: recover Secret
-  API Server->>User or App: return Secret
-  Note left of API Server: base64 encoded sensitive data
-```
-
-## External Secrets Operator
+### External Secrets Operator
 
 [External Secrets Operator](https://external-secrets.io/) project allows to recover secrets from a KMS server and inject them as native Secrets within Kubernetes.
 
-## KMS Provider with Encryption at rest
+### KMS Provider with Encryption at rest
 
 The Kubernetes API Server can encrypt the sensitive data from Secrets using the KMS Provider. In this scenario, the API server is set up through the "EncryptionConfiguration" definition that will include a cipher as provider and an encryption key (being encoded in base64). 
 
@@ -105,7 +93,7 @@ References:
 - From k3s: [Secrets Encryption Test Plan](https://github.com/k3s-io/k3s/wiki/Secrets-Encryption-Test-Plan)
 - From RKE2: [Secrets Encryption](https://docs.rke2.io/security/secrets_encryption/) 
 
-## KMS Provider with Plugin for external KMS
+### KMS Provider with Plugin for external KMS
 
 The Kubernetes API Server can encrypt the sensitve data from Secrets using the KMS Provider. In this scenario, an external KMS is used to encrypt in-flight the Data Encryption Key using to encrypt the sensitive data. This process is called an encryption envelop scheme.   
 
