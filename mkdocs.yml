@@ -96,6 +96,7 @@ nav:
   - Documentation: 
     - Release Notes: 'trousseau/release_notes.md'
     - Concepts: 'trousseau/concepts.md'
+    - Secrets Management: 'trousseau/secretmanagement.md'
     - Architecture: 'trousseau/architecture.md'
     - Deployment: 'trousseau/deployment.md'
     - Operations: 'trousseau/operations.md'
