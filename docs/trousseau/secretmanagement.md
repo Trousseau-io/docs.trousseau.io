@@ -17,12 +17,12 @@ The below table is providing a holistic view of the different Secret Management 
 | KMS Provider with Encryption at rest       | :material-close: | :material-close: | :material-check: [1] | :material-close: |
 | KMS Provider with Plugin for external KMS  | :material-check-all: | :material-check: [2] | :material-check-all: | :material-check: [3] |
 
-??? info "Legend"
+!!! info "Legend"
     - :material-close: used when does not mitigate the related component
     - :material-check: used when mitigate has caveat(s)
     - :material-check-all: used when mitigation has no caveat
 
-??? note "Notes"
+!!! note "Notes"
     - [1] including offline attack if encryption key is not recovered 
     - [2] only if KMS Provider Plugin is configured with no caching otherwise DEKs will be in memory and in clear text
     - [3] if the KMS is compromised, the DEKs can be decrypted allowing to decrypt the Secrets. Mitigation would be required to lockdown the platform.
