@@ -59,7 +59,23 @@ autonumber
 
 ### External Secrets Operator
 
-[External Secrets Operator](https://external-secrets.io/) project allows to recover secrets from a KMS server and inject them as native Secrets within Kubernetes.
+[External Secrets Operator](https://external-secrets.io/) (or ESO) project allows to recover secrets from a KMS server and inject them as native Secrets within Kubernetes, or in other words, base64 encoded and not encrypted.
+
+```mermaid
+sequenceDiagram
+participant User or App
+participant etcd
+participant API Server
+participant ESO
+participant KMS Server
+autonumber
+  User or App->>API Server: request Secret with ExternalSecret
+  API Server->>ESO: hand off the ExternalSecret 
+  Note left of ESO: verify if SecretStore exist 
+  ESO->>KMS Server: recover Secret
+  ESO->>API Server: create Secret
+  API Server->>etcd: store Secret
+```
 
 ### KMS Provider with Encryption at rest
 
