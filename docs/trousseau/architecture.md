@@ -41,7 +41,7 @@ Kubernetes is using a distributed key-value data store to record all API Objects
 
 Same concept applies to Secret, especially leveraging special characters for extra security, for example:
 
-``` title="secret.yml"
+``` title="Secret"
 --8<-- "trousseau/files/secret.yml"
 ```
 
@@ -80,8 +80,8 @@ autonumber
 
 The Kubernetes API Server can encrypt the sensitive data from Secrets using the KMS Provider. In this scenario, the API server is set up through the "EncryptionConfiguration" definition that will include a cipher as provider and an encryption key (being encoded in base64). 
 
-``` title="secret.yml"
---8<-- "trousseau/files/encryptionconfiguration.ym"
+``` title="EncryptionConfiguration"
+--8<-- "trousseau/files/encryptionconfiguration.yml"
 ```
 
 This will require a restart of the API Server to take effect and the following flow will be triggered:
