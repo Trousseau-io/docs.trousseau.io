@@ -4,7 +4,7 @@
 
 The Kubernetes API Server can encrypt the sensitve data from Secrets using the KMS Provider. In this scenario, an external KMS is used to encrypt in-flight the Data Encryption Key using to encrypt the sensitive data. This process is called an encryption envelop scheme. 
 
-The Trousseau project is providing an implementation of the Plugin component allowing the interaction of the API Server KMS Provider with an external KMS Server. The current list of supported KMS Servers is available within the [release notes](trousseau/releasenotes.md).
+The Trousseau project is providing an implementation of the Plugin component allowing the interaction of the API Server KMS Provider with an external KMS Server. The current list of supported KMS Servers is available within the [release notes](/trousseau/releasenotes.md).
 
 When creating the Secret with ```kubectl apply -f mysecret.yml```, the following flow will be triggered: 
 
@@ -60,7 +60,7 @@ A ConfigMap is used by the HashiCorp Vault Agent sidecar to hand over the Encryp
 
 Trousseau deploys as a DaemonSet to guarantee that every Control Plane node will have a running instance with its gRPC server addressing any potential partitioning that could occur during the Control Plane lifetime. 
 
-## Trousseau Deployment Workflow 
+## Trousseau Architecture Workflow 
 
 ### Kubernetes & Vault Configuration
 ```mermaid
