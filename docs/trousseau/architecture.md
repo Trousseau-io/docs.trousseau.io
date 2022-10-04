@@ -4,12 +4,12 @@
 
 The below table is providing a holistic view of the different Secret Management implementation and the mitigation of:
 
-- disk; if control plane node disk is compromised online (access to the node) or offline (access to a copy/backup)
-- RAM; if the memory allocation is compromised online (via a process like the API Server) or offline (memory dump from backup)
-- etcd; if the etcd data store is compromised (access via etcdctl) or offline (access to a copy/backup)
-- KMS server; if KMS server is compromised 
+- ```Disk```; if control plane node disk is compromised online (access to the node) or offline (access to a copy/backup)
+- ```RAM```; if the memory allocation is compromised online (via a process like the API Server) or offline (memory dump from backup)
+- ```etcd```; if the etcd data store is compromised (access via etcdctl) or offline (access to a copy/backup)
+- ```KMS server```; if KMS server is compromised 
                                           
-| Methode                                    | Disk :material-harddisk: | RAM :material-memory: | etcd :material-database: | KMS server :material-server: |
+| Implementation | Disk :material-harddisk: | RAM :material-memory: | etcd :material-database: | KMS server :material-server: |
 |--------------------------------------------|------|-----|------|------------| 
 | File System Encryption                     | :material-check-all: | :material-close: | :material-close: | :material-close: |
 | Native Kubernetes Secrets                  | :material-close: | :material-close: | :material-close: | :material-close: |
@@ -17,7 +17,14 @@ The below table is providing a holistic view of the different Secret Management 
 | KMS Provider with Encryption at rest       | :material-close: | :material-close: | :material-check: [1] | :material-close: |
 | KMS Provider with Plugin for external KMS  | :material-check-all: | :material-check: [2] | :material-check-all: | :material-check: [3] |
 
-Notes:
+**Legend:**
+
+- :material-close: used when does not mitigate the related component
+- :material-check: used when mitigate has caveat(s)
+- :material-check-all: used when mitigation has no caveat
+
+
+**Notes:**
 
 - [1] including offline attack if encryption key is not recovered 
 - [2] only if KMS Provider Plugin is configured with no caching otherwise DEKs will be in memory and in clear text
