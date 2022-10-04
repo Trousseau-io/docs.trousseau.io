@@ -11,6 +11,9 @@ Here are the requirements based on the environment type:
 ## Pre-deployment Secret
 
 Create a secret to verify Trousseau's deployment
+
+--8<-- "trousseau/files/pre-deploy-secret.yml"
+
 ```
-kubectl create secret generic secret-pre-deploy -n default --from-literal=mykey=mydata
+kubectl create pre-deploy-secret.yml
 ```
