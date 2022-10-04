@@ -17,18 +17,18 @@ The below table is providing a holistic view of the different Secret Management 
 | KMS Provider with Encryption at rest       | :material-close: | :material-close: | :material-check: [1] | :material-close: |
 | KMS Provider with Plugin for external KMS  | :material-check-all: | :material-check: [2] | :material-check-all: | :material-check: [3] |
 
-**Legend:**
+??? info "Legend"
 
-- :material-close: used when does not mitigate the related component
-- :material-check: used when mitigate has caveat(s)
-- :material-check-all: used when mitigation has no caveat
+  - :material-close: used when does not mitigate the related component
+  - :material-check: used when mitigate has caveat(s)
+  - :material-check-all: used when mitigation has no caveat
 
+??? note "Notes"
 
-**Notes:**
+  - [1] including offline attack if encryption key is not recovered 
+  - [2] only if KMS Provider Plugin is configured with no caching otherwise DEKs will be in memory and in clear text
+  - [3] if the KMS is compromised, the DEKs can be decrypted allowing to decrypt the Secrets. Mitigation would be required to lockdown the platform.
 
-- [1] including offline attack if encryption key is not recovered 
-- [2] only if KMS Provider Plugin is configured with no caching otherwise DEKs will be in memory and in clear text
-- [3] if the KMS is compromised, the DEKs can be decrypted allowing to decrypt the Secrets. Mitigation would be required to lockdown the platform.
 
 ## File System Encryption
 
@@ -41,8 +41,8 @@ Kubernetes is using a distributed key-value data store to record all API Objects
 
 Same concept applies to Secret, especially leveraging special characters for extra security, for example:
 
-``` title="Secret"
---8<-- "trousseau/files/secret.yml"
+``` title="mysecret.yml"
+--8<-- "trousseau/files/mysecret.yml"
 ```
 
 The above base64 encoded values are ```admin``` and ```p@ssw0rd$```. When creating the Secret with ```kubectl apply -f mysecret.yml```, the following flow will be triggered: 
@@ -80,7 +80,7 @@ autonumber
 
 The Kubernetes API Server can encrypt the sensitive data from Secrets using the KMS Provider. In this scenario, the API server is set up through the "EncryptionConfiguration" definition that will include a cipher as provider and an encryption key (being encoded in base64). 
 
-``` title="EncryptionConfiguration"
+``` title="encryptionconfiguration.yml"
 --8<-- "trousseau/files/encryptionconfiguration.yml"
 ```
 
