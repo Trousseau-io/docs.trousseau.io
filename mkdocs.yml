@@ -107,7 +107,7 @@ nav:
       - Overview: 'trousseau/overview.yml'
       - Setup HashiCorp Vault: 'trousseau/setup-hashicorp-vault.yml' 
       - Deploying Trousseau: 'trousseau/deployment.md'
-    - Operations: 'trousseau/operations.md'
+    - Operations: 'trousseau/operations.md' 
   - Contributing: 
     - Guidelines: 'contributing.md'
     - Development: 'trousseau/dev.md'
