@@ -4,23 +4,22 @@
 
 The below table is providing a holistic view of the different Secret Management implementation and the mitigation when:
 
-- ```Disk```; if control plane node disk is compromised online (access to the node) or offline (access to a copy/backup)
-- ```RAM```; if the memory allocation is compromised online (via a process like the API Server) or offline (memory dump from backup)
-- ```etcd```; if the etcd data store is compromised (access via etcdctl) or offline (access to a copy/backup)
-- ```KMS server```; if Key Management Service server is compromised 
+!!! info "Legend"  
+    - :material-close: used when does not mitigate the related component
+    - :material-check: used when mitigate has caveat(s)
+    - :material-check-all: used when mitigation has no caveat
+    - **Disk** (:material-harddisk:) ; if control plane node disk is compromised online (access to the node) or offline (access to a copy/backup)
+    - **RAM** (:material-memory:) ; if the memory allocation is compromised online (via a process like the API Server) or offline (memory dump from backup)
+    - **etcd** (:material-database:); if the etcd data store is compromised (access via etcdctl) or offline (access to a copy/backup)
+    - **KMS server** (:material-server:); if Key Management Service server is compromised 
                                           
-| Implementation | Disk :material-harddisk: | RAM :material-memory: | etcd :material-database: | KMS server :material-server: |
+| Implementation | :material-harddisk: | :material-memory: | :material-database: | :material-server: |
 |--------------------------------------------|------|-----|------|------------| 
 | File System Encryption                     | :material-check-all: | :material-close: | :material-close: | :material-close: |
 | Native Kubernetes Secrets                  | :material-close: | :material-close: | :material-close: | :material-close: |
 | [External Secrets Operator](https://external-secrets.io/) | :material-close: | :material-close: | :material-close: | :material-close: |
 | KMS Provider with Encryption at rest       | :material-close: | :material-close: | :material-check: [1] | :material-close: |
 | KMS Provider with Plugin for external KMS  | :material-check-all: | :material-check: [2] | :material-check-all: | :material-check: [3] |
-
-!!! info "Legend"
-    - :material-close: used when does not mitigate the related component
-    - :material-check: used when mitigate has caveat(s)
-    - :material-check-all: used when mitigation has no caveat
 
 !!! note "Notes"
     - [1] including offline attack if encryption key is not recovered 
