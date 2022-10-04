@@ -11,9 +11,9 @@ The below table is providing a holistic view of the different Secret Management 
     - **Disk** (:material-harddisk:) ; if control plane node disk is compromised online (access to the node) or offline (access to a copy/backup)
     - **RAM** (:material-memory:) ; if the memory allocation is compromised online (via a process like the API Server) or offline (memory dump from backup)
     - **etcd** (:material-database:); if the etcd data store is compromised (access via etcdctl) or offline (access to a copy/backup)
-    - **KMS server** (:material-server:); if Key Management Service server is compromised 
+    - **KMS server** (:material-key-chain:); if Key Management Service server is compromised 
                                           
-| Implementation | :material-harddisk: | :material-memory: | :material-database: | :material-server: |
+| Implementation | :material-harddisk: | :material-memory: | :material-database: | :material-key-chain: |
 |--------------------------------------------|------|-----|------|------------| 
 | File System Encryption                     | :material-check-all: | :material-close: | :material-close: | :material-close: |
 | Native Kubernetes Secrets                  | :material-close: | :material-close: | :material-close: | :material-close: |
