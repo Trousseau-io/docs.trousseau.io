@@ -15,7 +15,7 @@ During the installation steps, a DaemonSet will be used to deploy Trousseau on K
 
 Here is an extract for the connected installation: 
 
-!!! example "Connected installation"
+!!! abstract "Connected installation"
     ```YAML
         initContainers:
             - name: vault-agent
@@ -30,7 +30,7 @@ Here is an extract for the connected installation:
 
 Based on the above container image pushes to a private container image registry, edit the as follow:
 
-!!! example "Disconnected installation"
+!!! abstract "Disconnected installation"
     ```YAML
         initContainers:
             - name: vault-agent
