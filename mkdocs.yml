@@ -94,7 +94,7 @@ nav:
   - About: 'index.md'
   - Release notes: 'trousseau/release_notes.md'
   - Architecture:
-    - Concepts: 'trousseau/concepts.md'
+    - Terminology & Concepts: 'trousseau/concepts.md'
     - Secrets Management: 'trousseau/secretmanagement.md'
     - Troussseau Architecture: 'trousseau/architecture.md'
   - Documentation: 
