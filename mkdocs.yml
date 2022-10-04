@@ -104,8 +104,8 @@ nav:
     - Requirements: 'trousseau/requirements.md'
     - Disconnected: 'trousseau/disconnected.md'
     - Installing with HashiCorp Vault: 
-      - Overview: 'trousseau/overview.yml'
-      - Setup HashiCorp Vault: 'trousseau/setup-hashicorp-vault.yml' 
+      - Overview: 'trousseau/overview.md'
+      - Setup HashiCorp Vault: 'trousseau/setup-hashicorp-vault.md' 
       - Deploying Trousseau: 'trousseau/deployment.md'
     - Operations: 'trousseau/operations.md' 
   - Contributing: 
