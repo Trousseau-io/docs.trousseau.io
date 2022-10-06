@@ -16,7 +16,7 @@ kubectl -n kube-system create serviceaccount trousseau-vault-auth
     kubectl apply -f trousseau-vault-auth-secret.yml 
     ```    
     
-    ``` title="trousseau-vault-auth-secret.yml"
+    ```YAML title="trousseau-vault-auth-secret.yml"
     --8<-- "trousseau/files/trousseau-vault-auth-secret.yml"
     ```
     
