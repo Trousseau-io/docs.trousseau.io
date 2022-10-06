@@ -1,4 +1,11 @@
 
+## Enable the KMS Provider Plgin 
+
+Create the KMS provider plugin file
+```YAML title="trousseau-vault-encryptionconfiguration.yml"
+--8<-- "trousseau/files/trousseau-vault-encryptionconfiguration.yml"
+```
+
 ## RKE 1 
 TBA 
 
