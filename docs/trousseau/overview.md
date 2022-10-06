@@ -1,15 +1,13 @@
 
 Trousseau installation deploys and maintains its component as container using native Kubernetes API and the KMS (Key Management Service) tooling.   
 
-Considering the concept of *separation of duties*, the steps could be divided between two team; the platform and security teams.    
-The following workflow shows the installation steps and owners:
+The following workflow shows the installation steps:
 
-| # | Activity |Responsible Team|
+| # | Activity | Reference      |
 |---|----------|----------------|
-| 1 | [Create a Kubernetes ServicesAccount](#create-a-kubernetes-serviceaccount-kubernetes-admins) | ***Platform Team***|
-| 2 | [HashiCorp Vault Kubernetes Authentication & Transit engine](#hashicorp-vault-kubernetes-authentication--transit-engine-kubernetes-admins--security-admins) | ***Platform Team*** <br> ***Security Team***|
-| 3 | [Create a Trousseau Kubernetes ConfigMap](#create-a-trousseau-kubernetes-configmap-kubernetes-admins) | ***Platform Team***|
-| 4 | [Deploy the Trousseau DaemonSet](#deploy-trousseau-daemonset-kubernetes-admins) | ***Platform Team***|
-| 5 | [Enable Trousseau KMS provider in ```kube-apiserver```](#enable-trousseau-kms-provider-in-kube-apiserver-kubernetes-admins)| ***Platform Team***|
-| 6 | [Create and verify Secret encryption with Trousseau and HashiCorp Vault](#create-and-verify-secret-encryption-with-trousseau-and-hashicorp-vault-kubernetes-admins) | ***Platform Team*** | 
-| 7 | [Replace existing Kubernetes secrets with encrypted ones using Trousseau](#replace-existing-kubernetes-secrets-with-encrypted-ones-using-trousseau-kubernetes-admins) | ***Platform Team***|
+| 1 | Deploy a KMS | e.g. for [HashiCorp Vault](https://docs.trousseau.io/trousseau/setup-hashicorp-vault/) |
+| 2 | Configure a KMS Encryption Key Engine | e.g. [HashiCorp Vault](https://docs.trousseau.io/trousseau/v1/deployment/#setup-vault-transit-engine) |
+| 3 | Deploy Trousseau DaemonSet | e.g. [Deploy Trousseau](https://docs.trousseau.io/trousseau/v1/deployment/#customized-trousseaus-daemonset) |
+| 4 | Enable Trousseau KMS Plugin | e.g. [Vanilla Kubernetes](https://docs.trousseau.io/trousseau/setup-vanilla/) |
+| 5 | Verify the Setup | e.g. [Walkthrough](https://docs.trousseau.io/trousseau/verify-setup/) | 
+| 6 | Protect existing Secrets with Trousseau | e.g. [Replace existing Secrets](https://docs.trousseau.io/trousseau/operations/) |
