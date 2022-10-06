@@ -4,8 +4,8 @@ The below table provides a compatibility/supportability matrix:
 
 | Trousseau      | Kubernetes | AWS KMS              | Azure KMS            | HashiCorp Vault      |
 |----------------|------------|----------------------|----------------------|----------------------|
-| v1.1.3         | 1.18+      | :material-close:     | :material-close:     | :material-check-all: |
-| v2.0.0-alpha.2 | 1.22+      | :material-check-all: | :material-check-all: | :material-check-all: |
+| [v1.1.3](https://docs.trousseau.io/trousseau/release_notes/#fortune-cookie)         | 1.18+      | :material-close:     | :material-close:     | :material-check-all: |
+| [v2.0.0-alpha.2](https://docs.trousseau.io/trousseau/release_notes/#v200-alpha-smells-like-a-teen-spirit-pre-release) | 1.22+      | :material-check-all: | :material-check-all: | :material-check-all: |
 
 !!! tip 
     For the latest and greatest news about Trousseau's releases, please consult [GitHub Releases](https://github.com/ondat/trousseau/releases).
