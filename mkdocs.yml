@@ -101,14 +101,15 @@ nav:
     - Secrets Management: 'trousseau/secretmanagement.md'
     - Troussseau Architecture: 'trousseau/architecture.md'
   - Installing:
+    - Overview: 'trousseau/overview.md'
     - Requirements: 'trousseau/requirements.md'
     - Disconnected: 'trousseau/disconnected.md'
     - with HashiCorp Vault: 
-      - Overview: 'trousseau/overview.md'
       - Deploy HashiCorp Vault: 'trousseau/setup-hashicorp-vault.md' 
       - Deploy Trousseau: 'trousseau/v1/deployment.md'
       - Enable on Kubernetes: 'trousseau/setup-vanilla.md'
       - Enable on RKE: 'trousseau/setup-rke.md'
+    - Verify Setup: 'trousseau/verify-setup.md'
     - Operations: 'trousseau/operations.md' 
   - Contributing: 
     - Guidelines: 'contributing.md'
