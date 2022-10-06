@@ -17,8 +17,9 @@
     The documentation is not yet rendered and using this alpha pre-release for any other purpose than development is not recommended. 
 
 
-!!! info "What's Changed?
+!!! info "What's Changed?"
     Trousseau v2 is a redesign of the enntire architecture bringing extra resiliency, extending Kubernetes KMS capabilities, and bringing multi-KMS support. 
+    
     ``` 
     Here are the new features: 
     
