@@ -106,7 +106,7 @@ nav:
     - with HashiCorp Vault: 
       - Overview: 'trousseau/overview.md'
       - Deploy HashiCorp Vault: 'trousseau/setup-hashicorp-vault.md' 
-      - Deploy Trousseau: 'trousseau/deployment.md'
+      - Deploy Trousseau: 'trousseau/v1/deployment.md'
       - Enable on Kubernetes: 'trousseau/setup-vanilla.md'
       - Enable on RKE: 'trousseau/setup-rke.md'
     - Operations: 'trousseau/operations.md' 
