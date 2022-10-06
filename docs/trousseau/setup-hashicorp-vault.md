@@ -15,7 +15,7 @@ vault server -dev -dev-root-token-id=trousseau-demo -dev-listen-address 0.0.0.0:
 ```
 
 Expected output of the console from starting HashiCorp Vault:
-``` hl_lines="21 26 31 32"
+``` hl_lines="21 27 32 33"
 2022-03-05T10:35:10.760Z [INFO]  core.cluster-listener.tcp: starting listener: listener_address=0.0.0.0:8201
 2022-03-05T10:35:10.760Z [INFO]  core.cluster-listener: serving cluster requests: cluster_listen_address=[::]:8201
 2022-03-05T10:35:10.760Z [INFO]  core: post-unseal setup starting
