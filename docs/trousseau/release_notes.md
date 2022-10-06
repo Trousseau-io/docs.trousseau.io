@@ -10,7 +10,78 @@
 
 ## **Trousseau v2** 
 
-TBA
+### v2.0.0-alpha "Smells like a Teen Spirit (Pre-release)"
+
+!!! note "Release notes - v2.0.0-alpha.2"
+    This is a second pre-release of Trousseau v2. 
+    The documentation is not yet rendered and using this alpha pre-release for any other purpose than development is not recommended. 
+    
+!!! info "What's Changed?
+    Trousseau v2 is a redesign of the enntire architecture bringing extra resiliency, extending Kubernetes KMS capabilities, and bringing multi-KMS support. 
+    
+    Here are the new features: 
+    
+    - Multi KMS support including Azure KMS by @mhmxs in #147
+    
+    Here are code library updates:
+
+    - Bump github.com/stretchr/testify from 1.7.1 to 1.7.2 by @dependabot in #98
+    - Bump go.uber.org/zap from 1.19.0 to 1.21.0 by @dependabot in #100
+    - Change Dockerfile LABEL by @romdalf in #106
+    - Update README.md by @romdalf in #108
+    - Bump github.com/stretchr/testify from 1.7.2 to 1.7.4 by @dependabot in #115
+    - Bump k8s.io/apiserver from 0.24.1 to 0.24.2 by @dependabot in #114
+    - Update GitHub Issues templates by @romdalf in #122
+    - Bump github.com/stretchr/testify from 1.7.4 to 1.8.0 by @dependabot in #126
+    - Bump k8s.io/klog/v2 from 2.60.1 to 2.70.0 by @dependabot in #116
+    - Update README.md by @romdalf in #140
+    - Add Go report card to readme by @mhmxs in #141
+    - Validate log level by @mhmxs in #142
+    - v2 alpha to main by @romdalf in #145
+    - Bump google.golang.org/grpc from 1.47.0 to 1.48.0 in /providers/vault by @dependabot in #156
+    - Bump k8s.io/apiserver from 0.24.2 to 0.24.3 in /trousseau by @dependabot in #155
+    - Update Trousseau image version in readme by @mhmxs in #157
+    - Otherwise git hook fails if only untracked by @mhmxs in #170
+    - Upgrade Husky and SKIP_GIT_PUSH_HOOK option by @mhmxs in #176
+
+
+!!! note "Release notes - v2.0.0-alpha.1"
+    This is a first pre-release of Trousseau v2.
+    The documentation is not yet rendered and using this alpha pre-release for any other purpose than development is not recommended. 
+    
+!!! info "What's Changed"
+    Trousseau v2 is a redesign of the entire architecture bringing extra resiliency, extending Kubernetes KMS capabilities, and bringing multi-KMS support.
+
+    Here are the new features:
+
+    - Multi KMS support included AWS KMS by @mhmxs in #112
+    - Delete socket file before listen and terminate if socket is missing by @mhmxs in #127
+    - Generate manifests for producation usage by @mhmxs in #130
+    - Generate helm chart by @mhmxs in #131
+    
+    Here are code library updates:
+
+    - Bump github.com/stretchr/testify from 1.7.1 to 1.7.2 by @dependabot in #98
+    - Bump go.uber.org/zap from 1.19.0 to 1.21.0 by @dependabot in #100
+    
+    Here are CI/CD updates:
+
+    - e2e test with the supported versions of Kubernetes by @mhmxs in #128
+    - Split Taskfile to sections by @mhmxs in #129
+    - Multi Kube version e2e and tasks polish #125
+    - e2e test of AWS KMS #124
+    - e2e tests with debug provider #123
+    - Change Dockerfile LABEL by @romdalf in #106
+    - Update README.md by @romdalf in #108
+
+!!! example "How to use"
+    Replace the image parameter within the DaemonSet with:
+
+    ghcr.io/ondat/trousseau:trousseau-v2.0.0-alpha.1
+    ghcr.io/ondat/trousseau:proxy-v2.0.0-alpha.1
+    ghcr.io/ondat/trousseau:vault-v2.0.0-alpha.1
+    ghcr.io/ondat/trousseau:awskms-v2.0.0-alpha.1
+    ghcr.io/ondat/trousseau:debug-v2.0.0-alpha.1
 
 ## **Trousseau v1** 
 
