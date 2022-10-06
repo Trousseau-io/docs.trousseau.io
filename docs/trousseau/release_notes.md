@@ -1,9 +1,11 @@
 ## KMS Server Support
 
-| Trousseau | AWS KMS | Azure KMS | HashiCorp Vault |
-|-----------|---------|-----------|-----------------|
-| v1.x | :material-close: | :material-close: | :material-check-all: |
-| v2.x | :material-check-all: | :material-check-all: | :material-check-all: |
+The below table provides a compatibility/supportability matrix:
+
+| Trousseau      | Kubernetes | AWS KMS              | Azure KMS            | HashiCorp Vault      |
+|----------------|------------|----------------------|----------------------|----------------------|
+| v1.1.3         | 1.18+      | :material-close:     | :material-close:     | :material-check-all: |
+| v2.0.0-alpha.2 | 1.22+      | :material-check-all: | :material-check-all: | :material-check-all: |
 
 !!! tip 
     For the latest and greatest news about Trousseau's releases, please consult [GitHub Releases](https://github.com/ondat/trousseau/releases).
