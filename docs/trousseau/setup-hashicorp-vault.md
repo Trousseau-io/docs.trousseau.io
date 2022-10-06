@@ -2,10 +2,12 @@
 ## Setup a dev/test HashiCorp Vault
 
 !!! warning 
-    This HashiCorp Vault deployment is sufficent for a dev/test environment.   
-    Latest [Getting Started](https://learn.hashicorp.com/tutorials/vault/getting-started-dev-server?in=vault/getting-started).
+    This HashiCorp Vault deployment is sufficent for a dev/test environment([Getting Started](https://learn.hashicorp.com/tutorials/vault/getting-started-dev-server?in=vault/getting-started)). This setup is ephemeral and restarting ```vault``` will spawn a clean empty instance.
+    
+    For a persistent/production deployment, consider either the [Consul](https://learn.hashicorp.com/collections/vault/day-one-consul) or [integrated storage](https://learn.hashicorp.com/collections/vault/day-one-raft) deployment, or reaching out to HashiCorp for support. 
+    
 
-Start a dev/test Vault instance
+Start a dev/test Vault instance with a customer root token.
 ```bash
 vault server -dev -dev-root-token-id=trousseau-demo -dev-listen-address 0.0.0.0:8200 -log-level=debug
 ```
@@ -49,7 +51,7 @@ Root Token: trousseau-demo
 Development mode should NOT be used in production installations!
 ```
 
-Export the environment variables to setup Vault
+Export the environment variables to access the Vault service via API or CLI
 ```bash
 export VAULT_NAMESPACE=admin
 export VAULT_TOKEN="trousseau-demo"
