@@ -103,10 +103,10 @@ nav:
   - Installing:
     - Requirements: 'trousseau/requirements.md'
     - Disconnected: 'trousseau/disconnected.md'
-    - Deploy with HashiCorp Vault: 
+    - with HashiCorp Vault: 
       - Overview: 'trousseau/overview.md'
-      - Installing HashiCorp Vault: 'trousseau/setup-hashicorp-vault.md' 
-      - Installing Trousseau: 'trousseau/deployment.md'
+      - Deploy HashiCorp Vault: 'trousseau/setup-hashicorp-vault.md' 
+      - Deploy Trousseau: 'trousseau/deployment.md'
     - Operations: 'trousseau/operations.md' 
   - Contributing: 
     - Guidelines: 'contributing.md'
