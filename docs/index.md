@@ -5,9 +5,10 @@ Trousseau is an open-source Plugin for the [Kubernetes KMS provider](https://kub
 
 Trousseau is designed to be both a framework and a usable plugin to interact with any KMS server like: 
 
-- HashiCorp Vault (Community and Enterprise)
-- AWS KMS 
-- Azure KMS
+| Version | AWS KMS | Azure KMS | HashiCorp Vault |
+|-----------|---------|-----------|-----------------|
+| v1.x | :material-close: | :material-close: | :material-check-all: |
+| v2.x | :material-check-all: | :material-check-all: | :material-check-all: |
 
 --- 
 Why   
