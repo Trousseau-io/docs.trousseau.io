@@ -13,12 +13,13 @@
 ### v2.0.0-alpha "Smells like a Teen Spirit (Pre-release)"
 
 !!! note "Release notes - v2.0.0-alpha.2"
-    This is a second pre-release of Trousseau v2. 
+    This is a first pre-release of Trousseau v2.
     The documentation is not yet rendered and using this alpha pre-release for any other purpose than development is not recommended. 
-    
+
+
 !!! info "What's Changed?
     Trousseau v2 is a redesign of the enntire architecture bringing extra resiliency, extending Kubernetes KMS capabilities, and bringing multi-KMS support. 
-    
+    ``` 
     Here are the new features: 
     
     - Multi KMS support including Azure KMS by @mhmxs in #147
@@ -43,15 +44,17 @@
     - Update Trousseau image version in readme by @mhmxs in #157
     - Otherwise git hook fails if only untracked by @mhmxs in #170
     - Upgrade Husky and SKIP_GIT_PUSH_HOOK option by @mhmxs in #176
-
+    ```
 
 !!! note "Release notes - v2.0.0-alpha.1"
     This is a first pre-release of Trousseau v2.
     The documentation is not yet rendered and using this alpha pre-release for any other purpose than development is not recommended. 
     
+
 !!! info "What's Changed"
     Trousseau v2 is a redesign of the entire architecture bringing extra resiliency, extending Kubernetes KMS capabilities, and bringing multi-KMS support.
-
+    
+    ```
     Here are the new features:
 
     - Multi KMS support included AWS KMS by @mhmxs in #112
@@ -73,15 +76,17 @@
     - e2e tests with debug provider #123
     - Change Dockerfile LABEL by @romdalf in #106
     - Update README.md by @romdalf in #108
+    ```
 
 !!! example "How to use"
     Replace the image parameter within the DaemonSet with:
-
+    ```
     ghcr.io/ondat/trousseau:trousseau-v2.0.0-alpha.1
     ghcr.io/ondat/trousseau:proxy-v2.0.0-alpha.1
     ghcr.io/ondat/trousseau:vault-v2.0.0-alpha.1
     ghcr.io/ondat/trousseau:awskms-v2.0.0-alpha.1
     ghcr.io/ondat/trousseau:debug-v2.0.0-alpha.1
+    ```
 
 ## **Trousseau v1** 
 
