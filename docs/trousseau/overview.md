@@ -1,8 +1,7 @@
 
-Trousseau installation deploys and maintains its component as container using native Kubernetes API and mechanism along with the standard KMS (Key Management Service) tooling.   
+Trousseau installation deploys and maintains its component as container using native Kubernetes API and the KMS (Key Management Service) tooling.   
 
-In production-grade environment, a *separation of duties* will most likely be in place dividing the work between a DevOps team in charge of the Kubernetes side while a Security team will be in charge of the KMS one. The installation guide will mention who is doing what with ***Platform team*** and ***Security team*** mark. 
-
+Considering the concept of *separation of duties*, the steps could be divided between two team; the platform and security teams.    
 The following workflow shows the installation steps and owners:
 
 | # | Activity |Responsible Team|
