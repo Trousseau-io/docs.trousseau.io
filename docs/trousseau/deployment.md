@@ -1,6 +1,7 @@
 
 !!! note "HashiCorp Vault endpoint"
-    This guide assumes the API Vault endpoint is ```tdevhvc-01.trousseau.io```.
+    This guide uses as Vault endpoint the FQDN ```tdevhvc-01.trousseau.io```.  
+    Change as appropriate for your environment.  
 
 
 ### Kubernetes ServiceAccount
@@ -61,7 +62,7 @@ Apply RBAC rules to the ServiceAccount
 kubectl apply -f trousseau-vault-auth-rbac.yml
 ```
 
-``` title="trousseau-vault-auth-rbac.yml"
+```YAML title="trousseau-vault-auth-rbac.yml"
 --8<-- "trousseau/files/trousseau-vault-auth-rbac.yml"
 ```
 
@@ -194,7 +195,7 @@ Apply Trousseau's ConfigMap
 kubectl apply -f trousseau-vault-configmap.yml
 ```
 
-``` title="trousseau-vault-configmap.yml"
+```YAML title="trousseau-vault-configmap.yml"
 --8<-- "trousseau/files/trousseau-vault-configmap.yml"
 ```
 
@@ -204,7 +205,7 @@ Apply Trousseau's DaemonSet
 ```
 kubectl apply -f trousseau-vault-daemonset.yml
 ```
-``` title="trousseau-vault-daemonset.yml"
+```YAML title="trousseau-vault-daemonset.yml"
 --8<-- "trousseau/files/trousseau-vault-daemonset.yml"
 ```
 
@@ -218,19 +219,9 @@ kubectl apply -f trousseau-vault-daemonset.yml
 
 ### EncryptionConfiguration 
 Create the KMS provider plugin file
-```yaml title="trousseau-encryptionconfiguration.yaml"
----
-kind: EncryptionConfiguration
-apiVersion: apiserver.config.k8s.io/v1
-resources:
-  - resources:
-      - secrets
-    providers:
-      - kms:
-          name: vaultprovider
-          endpoint: unix:///opt/trousseau-kms/vaultkms.socket
-          cachesize: 1000
-      - identity: {} 
+
+```YAML title="trousseau-vault-encryptionconfiguration.ymll"
+--8<-- "trousseau/files/trousseau-vault-encryptionconfiguration.yml"
 ```
 
 ### Generic 
