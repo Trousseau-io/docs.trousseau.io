@@ -2,18 +2,20 @@
 ## Setup a dev/test HashiCorp Vault
 
 !!! warning 
-    This HashiCorp Vault deployment is sufficent for a dev/test environment([Getting Started](https://learn.hashicorp.com/tutorials/vault/getting-started-dev-server?in=vault/getting-started)). This setup is ephemeral and restarting ```vault``` will spawn a clean empty instance.
+    This HashiCorp Vault deployment is sufficent for a dev/test environment ([Getting Started](https://learn.hashicorp.com/tutorials/vault/getting-started-dev-server?in=vault/getting-started)). 
+    
+    **However, this setup is ephemeral and restarting ```vault``` will spawn a clean empty instance.**
     
     For a persistent/production deployment, consider either the [Consul](https://learn.hashicorp.com/collections/vault/day-one-consul) or [integrated storage](https://learn.hashicorp.com/collections/vault/day-one-raft) deployment, or reaching out to HashiCorp for support. 
     
 
-Start a dev/test Vault instance with a customer root token.
+Start a dev/test Vault instance with a customer root token:
 ```bash
 vault server -dev -dev-root-token-id=trousseau-demo -dev-listen-address 0.0.0.0:8200 -log-level=debug
 ```
 
-Expected output of the console from starting HashiCorp Vault
-```
+Expected output of the console from starting HashiCorp Vault:
+``` hl_lines="21 26 31 32"
 2022-03-05T10:35:10.760Z [INFO]  core.cluster-listener.tcp: starting listener: listener_address=0.0.0.0:8201
 2022-03-05T10:35:10.760Z [INFO]  core.cluster-listener: serving cluster requests: cluster_listen_address=[::]:8201
 2022-03-05T10:35:10.760Z [INFO]  core: post-unseal setup starting
@@ -51,13 +53,13 @@ Root Token: trousseau-demo
 Development mode should NOT be used in production installations!
 ```
 
-Export the environment variables to access the Vault service via API or CLI
+Export the environment variables to access the Vault service via API or CLI:
 ```bash
 export VAULT_NAMESPACE=admin
 export VAULT_TOKEN="trousseau-demo"
 ```
 
-Verify access to Vault instance
+Verify access to Vault instance:
 ```bash
 vault status 
 ```
