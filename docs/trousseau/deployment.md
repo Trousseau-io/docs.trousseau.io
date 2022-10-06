@@ -5,30 +5,63 @@ This guide assumes the API Vault endpoint is ```tdevhvc-01.trousseau.io```.
 
 Create ServiceAccount
 ```
-kubectl -n kube-system create serviceaccount trousseau-auth
+kubectl -n kube-system create serviceaccount trousseau-vault-auth
 ```
 
-Create the ServiceAccount file
-```YAML title="trousseau-auth-serviceaccount.yaml"
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-   name: role-tokenreview-binding
-   namespace: kube-system
-roleRef:
-   apiGroup: rbac.authorization.k8s.io
-   kind: ClusterRole
-   name: system:auth-delegator
-subjects:
-- kind: ServiceAccount
-  name: trousseau-auth
-  namespace: kube-system
-``` 
+!!! info "from Kubernetes 1.24+"
+    As of Kubernetes 1.24+, creating a ServiceAccount will not auto-generate the token and related secret. To create the token: 
+    
+    ``` title="trousseau-vault-auth-secret.yml"
+    --8<-- "trousseau/files/trousseau-vault-auth-secret.yml"
+    ```
+    
+    ```bash 
+    kubectl apply -f trousseau-vault-auth-secret.yml 
+    ```
+    
+    Verify the ServiceAccount token creation:
+    ```bash 
+    kubectl -n kube-system describe secrets trousseau-vault-auth 
+    ```
+    ```
+    Name:         trousseau-vault-auth
+    Namespace:    kube-system
+    Labels:       <none>
+    Annotations:  kubernetes.io/service-account.name: trousseau-vault-auth
+                 kubernetes.io/service-account.uid: aa9fe853-29a7-4f0d-a247-0e6df10925f7
+
+    Type:  kubernetes.io/service-account-token
+
+    Data
+    ====
+    ca.crt:     566 bytes
+    namespace:  11 bytes
+    token:      eyJhbGciOiJSUzI1NiIsImtpZCI6Illybldqd2xaRTZNRl95RXpoZzFiTFVRWlVWLUpjZkdraHlSTDVxTmZfX1EifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJ2YXVsdC1hdXRoLXNlY3JldCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJ2YXVsdC1hdXRoIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiYWE5ZmU4NTMtMjlhNy00ZjBkLWEyNDctMGU2ZGYxMDkyNWY3Iiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOnZhdWx0LWF1dGgifQ.iD7-LOvvKRuNxVkr7P-bMd3x4c9g65LMhRDNoj8oAgnMq08_RkZrEXKWRCXiQ2h7ucNlop6DC17Hnp5cppbbcnSPDwOUV9iN2Y4I9yKmVOW0pv_f4Co52HmToswMElEaBj3l9LPzPiHG-QlTGPDoXX5j3mcj7Rd53UO7ep08CkvUZGFxInSNvuTkJScOda1_WQxRXLyB3AMW-hPfVcejsCI-6Lnea31YFFJ_WqO_mL5LTG92c4eOk5bF9i7sFkbLU8GvEWNzXytTSLYZ6J2J_sL1W8Eq8vfkwHhMu9dtEKcHoe3U0MRjP6ZVvsTSlcrQYIEUXmRlMLlofZzwkfSNpw
+    ```
+   
+   Verify the link between the ServiceAccount and token:
+   ```bash 
+   kubectl -n kube-system describe sa trousseau-vault-auth
+   ```
+   ```
+   Name:                trousseau-vault-auth
+   Namespace:           kube-system
+   Labels:              <none>
+   Annotations:         <none>
+   Image pull secrets:  <none>
+   Mountable secrets:   <none>
+   Tokens:              vault-auth
+   Events:              <none>
+   ```
+
+Apply RBAC rules to the ServiceAccount  
+``` title="trousseau-vault-auth-rbac.yml"
+--8<-- "trousseau/files/trousseau-vault-auth-rbac.yml"
+```
 
 Apply the ServiceAccount config file
 ```
-kubectl apply -f trousseau-auth-serviceaccount.yaml
+kubectl apply -f trousseau-vault-auth-rbac.yml
 ```
 
 ### Setup Vault Kubernetes Auth
