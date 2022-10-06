@@ -1,5 +1,7 @@
 
-This guide assumes the API Vault endpoint is ```tdevhvc-01.trousseau.io```.
+!!! note "HashiCorp Vault endpoint"
+    This guide assumes the API Vault endpoint is ```tdevhvc-01.trousseau.io```.
+
 
 ### Kubernetes ServiceAccount
 
@@ -10,19 +12,19 @@ kubectl -n kube-system create serviceaccount trousseau-vault-auth
 
 !!! info "from Kubernetes 1.24+"
     As of Kubernetes 1.24+, creating a ServiceAccount will not auto-generate the token and related secret. To create the token: 
+    ```bash 
+    kubectl apply -f trousseau-vault-auth-secret.yml 
+    ```    
     
     ``` title="trousseau-vault-auth-secret.yml"
     --8<-- "trousseau/files/trousseau-vault-auth-secret.yml"
-    ```
-    
-    ```bash 
-    kubectl apply -f trousseau-vault-auth-secret.yml 
     ```
     
     Verify the ServiceAccount token creation:
     ```bash 
     kubectl -n kube-system describe secrets trousseau-vault-auth 
     ```
+    
     ```
     Name:         trousseau-vault-auth
     Namespace:    kube-system
@@ -50,24 +52,23 @@ kubectl -n kube-system create serviceaccount trousseau-vault-auth
    Annotations:         <none>
    Image pull secrets:  <none>
    Mountable secrets:   <none>
-   Tokens:              vault-auth
+   Tokens:              trousseau-vault-auth
    Events:              <none>
    ```
 
 Apply RBAC rules to the ServiceAccount  
-``` title="trousseau-vault-auth-rbac.yml"
---8<-- "trousseau/files/trousseau-vault-auth-rbac.yml"
-```
-
-Apply the ServiceAccount config file
 ```
 kubectl apply -f trousseau-vault-auth-rbac.yml
+```
+
+``` title="trousseau-vault-auth-rbac.yml"
+--8<-- "trousseau/files/trousseau-vault-auth-rbac.yml"
 ```
 
 ### Setup Vault Kubernetes Auth
 Gather the Kubernetes ServiceAccount details to configure the Vault Auth for Kubernetes
 ```
-export VAULT_SA_NAME=$(kubectl -n kube-system get sa trousseau-auth \
+export VAULT_SA_NAME=$(kubectl -n kube-system get sa trousseau-vault-auth \
     --output jsonpath="{.secrets[*]['name']}")
 ```
 
@@ -112,7 +113,7 @@ ZAPi0FD2284iDQIhAJWPmpj6FixOe7I8kG0vij8rbN0N/+R8CzTrnNZ5Ioit
 ```
 
 !!! warning 
-    * requested the quotes to avoid partial writings of the configuration with Vault 
+    * the quotes are required to avoid partial writings of the configuration with Vault 
     * the ```kubernetes_host``` might return ```https://127.0.0.1:6443``` resulting to a failure when Vault will dialback to the Kubernetes cluster to do an API call for the ```tokenreviews```. Export manually the external IP/FQDN Kubernetes API endpoint (like ```export K8S_HOST=https://FQDN:6443```). 
     * the ```issuer``` could be different than ```https://kubernetes.default.svc.cluster.local``` when a Kubernetes cluster was set up with a custom ```service-account-issuer``` (see [Kubernetes documentation](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#service-account-token-volume-projection)).   
     The discovery can be done following this [HashiCorp article](https://www.vaultproject.io/docs/auth/kubernetes#discovering-the-service-account-issuer).
@@ -180,7 +181,7 @@ vaultaddress=$VAULT_ADDR vaulttoken=$TROUSSEAU_TOKEN \
 Create a link between the ServiceAccount, namespace, and policies in Vault
 ```
 vault write auth/kubernetes/role/trousseau \
-        bound_service_account_names=trousseau-auth \
+        bound_service_account_names=trousseau-vault-auth \
         bound_service_account_namespaces=kube-system \
         policies=trousseau-kv-ro \
         ttl=24h
@@ -188,164 +189,23 @@ vault write auth/kubernetes/role/trousseau \
 
 ### Vault Agent ConfigMap
 
-Create Vault Agent ConfigMap file
-```YAML title="vault-configmap.yaml"
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: trousseau-vault-agent-config
-  namespace: kube-system
-data:
-  vault-agent-config.hcl: |
-    exit_after_auth = true
-    pid_file = "/home/vault/pidfile"
-    auto_auth {
-        method "kubernetes" {
-            mount_path = "auth/kubernetes"
-            config = {
-                role = "trousseau"
-            }
-        }
-        sink "file" {
-            config = {
-                path = "/home/vault/.vault-token"
-            }
-        }
-    }
-
-    template {
-    destination = "/etc/secrets/config.yaml"
-    contents = <<EOT
-    {{- with secret "secret/data/trousseau/config" }}
-    --- 
-    provider: vault
-    vault:
-      keynames:
-      - {{ .Data.data.transitkeyname }} 
-      address: {{ .Data.data.vaultaddress }} 
-      token: {{ .Data.data.vaulttoken }} 
-    {{ end }} 
-    EOT
-    }
+Apply Trousseau's ConfigMap
+```
+kubectl apply -f trousseau-vault-configmap.yml
 ```
 
-Apply Trousseau's ConfigMap file ```trousseau-configmap.yaml```
-```
-kubectl apply -f trousseau-configmap.yaml
+``` title="trousseau-vault-configmap.yml"
+--8<-- "trousseau/files/trousseau-vault-configmap.yml"
 ```
 
 ### Trousseau DaemonSet
 
-Create Trousseau custom DaemonSet file
-```YAML title="trousseau-daemonset.yaml"
----
-apiVersion: apps/v1
-kind: DaemonSet
-metadata:
-  name: trousseau-kms-provider
-  namespace: kube-system
-  labels:
-    tier: control-plane
-    app: trousseau-kms-provider
-spec:
-  selector:
-    matchLabels:
-      name: trousseau-kms-provider
-  template:
-    metadata:
-      labels:
-        name: trousseau-kms-provider
-    spec:
-      serviceAccountName: trousseau-auth
-      priorityClassName: system-cluster-critical
-      hostNetwork: true
-      initContainers:
-        - name: vault-agent
-          image: vault                          # (1)
-          securityContext:
-            privileged: true
-          args:
-            - agent
-            - -config=/etc/vault/vault-agent-config.hcl
-            - -log-level=debug
-          env:
-            - name: VAULT_ADDR
-              value: http://FQDN:8200           # (2)
-          volumeMounts:
-            - name: config
-              mountPath: /etc/vault
-            - name: shared-data 
-              mountPath: /etc/secrets
-      containers:
-        - name: trousseau-kms-provider
-          image: ghcr.io/ondat/trousseau:v1.1.3 # (3)
-          imagePullPolicy: Always
-          env:                        
-            #- name: VAULT_NAMESPACE            # (4)
-            #  value: admin
-            - name: VAULT_SKIP_VERIFY           # (5)
-              value: "true"           
-          args:
-            - -v=5
-            - --config-file-path=/opt/trousseau/config.yaml
-            - --listen-addr=unix:///opt/trousseau-kms/vaultkms.socket                            # [REQUIRED] Version of the key to use
-            - --zap-encoder=json
-            - --v=3
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-              - ALL
-            readOnlyRootFilesystem: true
-            runAsUser: 0
-          ports:
-            - containerPort: 8787
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 8787
-            failureThreshold: 3
-            periodSeconds: 10
-          resources:
-            requests:
-              cpu: 50m
-              memory: 64Mi
-            limits:
-              cpu: 300m
-              memory: 256Mi
-          volumeMounts:
-            - name: vault-kms
-              mountPath: /opt/trousseau-kms
-            - name: shared-data
-              mountPath: /opt/trousseau/
-      volumes:
-        - name: trousseau-kms
-          hostPath:
-            path: /opt/trousseau-kms
-        - configMap:
-            items:
-              - key: vault-agent-config.hcl
-                path: vault-agent-config.hcl
-            name: trousseau-vault-agent-config
-          name: config
-        - emptyDir: {}
-          name: shared-data
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: node-role.kubernetes.io/control-plane
-                    operator: Exists
-      tolerations:
-        - key: node-role.kubernetes.io/control-plane
-          operator: Exists
-          effect: NoSchedule
-        - key: node-role.kubernetes.io/etcd
-          operator: Exists
-          effect: NoExecute
+Apply Trousseau's DaemonSet
+```
+kubectl apply -f trousseau-vault-daemonset.yml
+```
+``` title="trousseau-vault-daemonset.yml"
+--8<-- "trousseau/files/trousseau-vault-daemonset.yml"
 ```
 
 1. :material-information: update the version to the desired version
