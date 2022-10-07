@@ -15,7 +15,7 @@ Why
 
 Kubernetes platform users are all facing the very same question: how to handle Secrets?
 
-While using etcd to store API object defintions and their state, the Kubernetes secret sensitive data fields are encoded in base64 and shipped as-is into the key value store database. Even if the filesystem on which etcd runs is encrypted, the etcd entries are not.
+While using etcd to store API object definitions and their state, the Kubernetes secret sensitive data fields are encoded in base64 and shipped as-is into the key value store database. Even if the filesystem on which etcd runs is encrypted, the accessing Secrets from the Kubernetes API is not.
 
 Not always considered, Secrets are used by both platform components and applications. While the application secrets could be stored within an external Key Management Service (KMS), the platform components can't as they leverages the native Kubernetes API for Secrets management.   
 This design pattern supports an open integration architecture along with standardization, scalability, and resilience.
