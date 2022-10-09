@@ -1,8 +1,8 @@
-# Kubernetes Secrets Management
+# Kubernetes Secrets Management Implementations
 
-## Threat Modeling 
+## Security Comparisons   
 
-The below table is providing a holistic view of the different Secret Management implementation and their mitigations against Kubernetes internal and external components.
+The below table is providing a holistic overview of the different Secret Management implementations and what attack risks they mitigate.
 
 !!! info "Legend"  
     - :material-close: used when does not mitigate the related component
@@ -18,7 +18,7 @@ The below table is providing a holistic view of the different Secret Management 
 | File System Encryption                     | :material-check-all: | :material-close: | :material-close: | :material-close: |
 | Native Kubernetes Secrets                  | :material-close: | :material-close: | :material-close: | :material-close: |
 | [External Secrets Operator](https://external-secrets.io/) | :material-close: | :material-close: | :material-close: | :material-close: |
-| KMS Provider with Encryption at rest       | :material-close: | :material-close: | :material-check: [1] | :material-close: |
+| Encryption at rest                         | :material-close: | :material-close: | :material-check: [1] | :material-close: |
 | KMS Provider with Plugin for external KMS  | :material-check-all: | :material-check: [2] | :material-check-all: | :material-check: [3] |
 
 !!! note "Notes"
@@ -91,7 +91,7 @@ autonumber
   API Server->>etcd: store Secret
 ```
 
-### KMS Provider with Encryption at rest
+### Encryption at rest
 
 The Kubernetes API Server can encrypt the sensitive data from Secrets using the KMS Provider. In this scenario, the API server is set up through the "EncryptionConfiguration" definition that will include a cipher as provider and an encryption key (being encoded in base64). 
 
