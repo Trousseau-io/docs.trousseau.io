@@ -28,6 +28,63 @@ autonumber
   API Server->>etcd: store Secrets and DEK both encrypted
 ```
 
+```mermaid
+sequenceDiagram
+participant User
+participant etcd
+participant kube-apiserver
+participant EncryptionConfiguration
+autonumber
+  User->>kube-apiserver: create Secret
+  kube-apiserver->>EncryptionConfiguration: which provider?
+  EncryptionConfiguration->>kube-apiserver: aesgcm
+  kube-apiserver->>kube-apiserver: encrypt Secret with key
+  kube-apiserver->>etcd: store encrypted Secret
+```
+
+```mermaid
+sequenceDiagram
+participant User
+participant etcd
+participant kube-apiserver
+participant EncryptionConfiguration
+participant KMS Plugin
+participant KMS Server
+autonumber
+  User->>kube-apiserver: create Secret
+  kube-apiserver->>EncryptionConfiguration: which provider?
+  EncryptionConfiguration->>kube-apiserver: KMSv1
+  kube-apiserver->>kube-apiserver: generate a dedicated DEK per object
+  kube-apiserver->>kube-apiserver: encrypt Secret with DEK
+  kube-apiserver->>KMS Plugin: encrypt DEK with KMS KEK
+  KMS Plugin->>KMS Server: encrypt DEK
+  KMS Server->>KMS Server: encrypt DEK with KEK
+  KMS Plugin->>kube-apiserver: return encrypted DEK
+  kube-apiserver->>etcd: store encrypted Secret and encrypted DEK
+```
+
+```mermaid
+sequenceDiagram
+participant User
+participant etcd
+participant kube-apiserver
+participant EncryptionConfiguration
+participant KMS Plugin
+participant KMS Server
+autonumber
+  User->>kube-apiserver: create Secret
+  kube-apiserver->>EncryptionConfiguration: which provider?
+  EncryptionConfiguration->>kube-apiserver: KMSv2
+  kube-apiserver->>kube-apiserver: encrypt Secret with DEK
+  Note right of kube-apiserver: if no DEK, generate one
+  kube-apiserver->>KMS Plugin: encrypt DEK with KMS KEK
+  Note right of kube-apiserver: if DEK was generated
+  KMS Plugin->>KMS Server: encrypt DEK
+  KMS Server->>KMS Server: encrypt DEK with KEK
+  KMS Plugin->>kube-apiserver: return encrypted DEK
+  kube-apiserver->>etcd: store encrypted Secret and encrypted DEK
+```
+
 ### Software Components
 
 #### Trousseau
