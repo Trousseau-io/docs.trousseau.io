@@ -87,14 +87,16 @@ autonumber
   User->>kube-apiserver: create Secret
   kube-apiserver->>EncryptionConfiguration: which provider?
   EncryptionConfiguration->>kube-apiserver: KMSv2
+  opt if no DEK
+    kube-apiserver->>kube-apiserver: generate a DEK
+    kube-apiserver->>KMS Plugin: encrypt DEK with KMS KEK
+    KMS Plugin->>KMS Server: encrypt DEK
+    KMS Server->>KMS Server: encrypt DEK with KEK
+    KMS Plugin->>kube-apiserver: return encrypted DEK
+    kube-apiserver->>etcd: store encrypted DEK
+  end
   kube-apiserver->>kube-apiserver: encrypt Secret with DEK
-  Note right of kube-apiserver: if no DEK, generate one
-  kube-apiserver->>KMS Plugin: encrypt DEK with KMS KEK
-  Note right of kube-apiserver: if DEK was generated
-  KMS Plugin->>KMS Server: encrypt DEK
-  KMS Server->>KMS Server: encrypt DEK with KEK
-  KMS Plugin->>kube-apiserver: return encrypted DEK
-  kube-apiserver->>etcd: store encrypted Secret and encrypted DEK
+  kube-apiserver->>etcd: store encrypted Secret
 ```
 
 ### Software Components
