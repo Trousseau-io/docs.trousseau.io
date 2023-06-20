@@ -27,6 +27,18 @@ autonumber
   KMS Provider->>API Server: return encrypted DEK with KID
   API Server->>etcd: store Secrets and DEK both encrypted
 ```
+```mermaid
+sequenceDiagram
+participant User
+participant etcd
+participant kube-apiserver
+participant EncryptionConfiguration
+autonumber
+  User->>kube-apiserver: create Secret
+  kube-apiserver->>EncryptionConfiguration: which provider?
+  EncryptionConfiguration->>kube-apiserver: identity
+  kube-apiserver->>etcd: store base64 encoded Secret
+```
 
 ```mermaid
 sequenceDiagram
