@@ -48,13 +48,15 @@ The above base64 encoded values are ```admin``` and ```p@ssw0rd$```. When creati
 
 ```mermaid
 sequenceDiagram
-participant User or App
+participant User
+box control plane
 participant etcd
-participant API Server
+participant kube-apiserver
+end
 autonumber
-  User or App->>API Server: create Secret
-  Note right of User or App: base64 encoded sensitive data
-  API Server->>etcd: store Secret
+  User->>kube-apiserver: create Secret
+  Note right of User: base64 encoded sensitive data
+  kube-apiserver->>etcd: store Secret
 ```
 
 ### External Secrets Operator
