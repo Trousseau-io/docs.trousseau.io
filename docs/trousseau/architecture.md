@@ -37,7 +37,7 @@ autonumber
   User->>kube-apiserver: create Secret
   kube-apiserver->>EncryptionConfiguration: which provider?
   EncryptionConfiguration->>kube-apiserver: identity
-  kube-apiserver->>etcd: store base64 encoded Secret
+  kube-apiserver->>etcd: store base64-encoded Secret
 ```
 
 ```mermaid
