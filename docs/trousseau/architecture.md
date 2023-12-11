@@ -6,37 +6,6 @@ The Kubernetes API Server can encrypt the sensitve data from Secrets using the K
 
 The Trousseau project is providing an implementation of the Plugin component allowing the interaction of the API Server KMS Provider with an external KMS Server. The current list of supported KMS Servers is available within the [release notes](/trousseau/releasenotes.md).
 
-```mermaid
-sequenceDiagram
-participant User or App
-box Control Plane
-participant etcd
-participant kube-apiserver
-participant kube-controller-manager
-participant kube-scheduler
-end
-box Node
-participant kubelet
-participant Container runtime
-participant Pod
-end
-autonumber
-  User or App->>kube-apiserver: Create Pod
-  kube-apiserver->>etcd: Store Pod Specs
-  kube-apiserver->>kube-controller-manager: Reconcile Desired State
-  kube-controller-manager->>kube-apiserver: Current State different than Desired
-  kube-apiserver->>kube-scheduler: Create Pod
-  kube-scheduler->>kube-apiserver: Available Node
-  kube-apiserver->>etcd: Store Node Specs
-  kube-apiserver->>kubelet: Bind Pod to Node
-  kubelet->>Container runtime: Run Pod
-  Container runtime->>Pod: Status
-  Container runtime->>kubelet: Ok
-  kubelet->>kube-apiserver: Pod Status
-  kube-apiserver->>etcd: Store Pod Status
-  kube-apiserver->>User or App: Pod Created
-```
-
 When creating the Secret with ```kubectl apply -f mysecret.yml```, the following flow will be triggered: 
 
 ```mermaid
