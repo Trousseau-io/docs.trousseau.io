@@ -11,6 +11,37 @@ When creating the Secret with ```kubectl apply -f mysecret.yml```, the following
 ```mermaid
 sequenceDiagram
 participant User or App
+box Control Plane
+participant etcd
+participant kube-apiserver
+participant kube-controller-manager
+participant kube-scheduler
+end
+box Node
+participant kubelet
+participant container runtime
+participant Pod
+end
+autonumber
+  User or App->>kube-apiserver: create Pod
+  kube-apiserver->>etcd: store Pod specs
+  kube-apiserver->>kube-controller-manager: reconcile desired state
+  kube-controller-manager->>kube-apiserver: current state different than desired
+  kube-apiserver->>kube-scheduler: create Pod
+  kube-scheduler->>kube-apiserver: available node
+  kube-apiserver->>etcd: store node specs
+  kube-apiserver->>kubelet: bind Pod to node
+  kubelet->>container runtime: run Pod
+  container runtime->>Pod: status
+  container runtime->>kubelet: OK
+  kubelet->>kube-apiserver: Pod status
+  kube-apiserver->>etcd: store Pod status
+  kube-apiserver->>User or App: Pod created
+```
+
+```mermaid
+sequenceDiagram
+participant User or App
 participant etcd
 participant API Server
 participant KMS Provider
