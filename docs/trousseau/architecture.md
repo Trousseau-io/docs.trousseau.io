@@ -17,7 +17,7 @@ participant kube-apiserver
 participant kube-controller-manager
 participant kube-scheduler
 end
-box Node
+box Compute Node
 participant kubelet
 participant container runtime
 participant Pod
