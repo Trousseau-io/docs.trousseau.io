@@ -92,6 +92,7 @@ box Control Plane
 participant etcd
 participant kube-apiserver
 participant EncryptionConfiguration
+end
 autonumber
   User or App->>kube-apiserver: create Secret
   kube-apiserver->>EncryptionConfiguration: which provider?
@@ -107,6 +108,7 @@ box Control Plane
 participant etcd
 participant kube-apiserver
 participant EncryptionConfiguration
+end
 autonumber
   User or App->>kube-apiserver: create Secret
   kube-apiserver->>EncryptionConfiguration: which provider?
@@ -176,6 +178,7 @@ participant etcd
 participant kube-apiserver
 participant KMS Provider
 participant KMS Plugin
+end
 participant KMS Server
 autonumber
   User or App->>kube-apiserver: create Secret
