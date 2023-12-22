@@ -42,6 +42,53 @@ autonumber
 ```mermaid
 sequenceDiagram
 participant User or App
+box Control Plane
+participant etcd
+participant kube-apiserver
+end
+autonumber
+  User or App->>kube-apiserver: create Secret
+  Note right of User or App: base64 encoded data
+  kube-apiserver->>etcd: store Secret
+  kube-apiserver->>User or App: Secret created
+```
+
+```mermaid
+sequenceDiagram
+participant User or App
+box Control Plane
+participant etcd
+participant kube-apiserver
+participant kube-controller-manager
+participant kube-scheduler
+end
+box Compute Node
+participant kubelet
+participant container runtime
+participant Pod
+end
+autonumber
+  User or App->>kube-apiserver: create Pod
+  kube-apiserver->>etcd: store Pod specs
+  kube-apiserver->>kube-controller-manager: reconcile desired state
+  kube-controller-manager->>kube-apiserver: current state different than desired
+  kube-apiserver->>kube-scheduler: create Pod
+  kube-scheduler->>kube-apiserver: available node
+  kube-apiserver->>etcd: store Node specs
+  kube-apiserver->>kubelet: bind Pod to node
+  kubelet->>container runtime: run Pod
+  kubelet->>kube-apiserver: get Secret
+  kube-apiserver->>kubelet: put Secret
+  container runtime->>kubelet: OK
+  kubelet->>kube-apiserver: Pod status
+  kube-apiserver->>etcd: store Pod status
+  kube-apiserver->>User or App: Pod created
+```
+
+
+```mermaid
+sequenceDiagram
+participant User or App
 participant etcd
 participant API Server
 participant KMS Provider
