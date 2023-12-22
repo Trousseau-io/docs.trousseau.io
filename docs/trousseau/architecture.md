@@ -85,38 +85,111 @@ autonumber
   kube-apiserver->>User or App: Pod created
 ```
 
+```mermaid
+sequenceDiagram
+participant User or App
+box Control Plane
+participant etcd
+participant kube-apiserver
+participant EncryptionConfiguration
+autonumber
+  User or App->>kube-apiserver: create Secret
+  kube-apiserver->>EncryptionConfiguration: which provider?
+  EncryptionConfiguration->>kube-apiserver: identity
+  kube-apiserver->>etcd: store base64-encoded Secret
+  kube-apiserver->>User or App: Secret created
+```
 
 ```mermaid
 sequenceDiagram
 participant User or App
+box Control Plane
 participant etcd
-participant API Server
+participant kube-apiserver
+participant EncryptionConfiguration
+autonumber
+  User or App->>kube-apiserver: create Secret
+  kube-apiserver->>EncryptionConfiguration: which provider?
+  EncryptionConfiguration->>kube-apiserver: aesgcm
+  kube-apiserver->>kube-apiserver: encrypt Secret with key
+  kube-apiserver->>etcd: store encrypted Secret
+  kube-apiserver->>User or App: Secret created
+```
+
+```mermaid
+sequenceDiagram
+participant User or App
+box Control Plane
+participant etcd
+participant kube-apiserver
+participant EncryptionConfiguration
+participant KMS Plugin
+end
+participant KMS Server
+autonumber
+  User or App->>kube-apiserver: create Secret
+  kube-apiserver->>EncryptionConfiguration: which provider?
+  EncryptionConfiguration->>kube-apiserver: KMSv1
+  kube-apiserver->>kube-apiserver: generate a dedicated DEK per object
+  kube-apiserver->>kube-apiserver: encrypt Secret with DEK
+  kube-apiserver->>KMS Plugin: encrypt DEK with KMS KEK
+  KMS Plugin->>KMS Server: encrypt DEK
+  KMS Server->>KMS Server: encrypt DEK with KEK
+  KMS Plugin->>kube-apiserver: return encrypted DEK
+  kube-apiserver->>etcd: store encrypted Secret and encrypted DEK
+  kube-apiserver->>User or App: Secret created
+```
+
+```mermaid
+sequenceDiagram
+participant User or App
+box Control Plane
+participant etcd
+participant kube-apiserver
+participant EncryptionConfiguration
+participant KMS Plugin
+end
+participant KMS Server
+autonumber
+  User or App->>kube-apiserver: create Secret
+  kube-apiserver->>EncryptionConfiguration: which provider?
+  EncryptionConfiguration->>kube-apiserver: KMSv2
+  opt if no existing DEK
+    kube-apiserver->>kube-apiserver: generate a DEK
+    kube-apiserver->>KMS Plugin: encrypt DEK with KMS KEK
+    KMS Plugin->>KMS Server: encrypt DEK
+    KMS Server->>KMS Server: encrypt DEK with KEK
+    KMS Plugin->>kube-apiserver: return encrypted DEK
+    kube-apiserver->>etcd: store encrypted DEK
+  end
+  kube-apiserver->>kube-apiserver: encrypt Secret with DEK
+  kube-apiserver->>etcd: store encrypted Secret
+  kube-apiserver->>User or App: Secret created
+```
+
+
+```mermaid
+sequenceDiagram
+participant User or App
+box Control Plane
+participant etcd
+participant kube-apiserver
 participant KMS Provider
 participant KMS Plugin
 participant KMS Server
 autonumber
-  User or App->>API Server: create Secret
-  API Server->>KMS Provider: request to encrypt Secret
+  User or App->>kube-apiserver: create Secret
+  kube-apiserver->>KMS Provider: request to encrypt Secret
   Note left of KMS Provider: generate a DEK
   Note left of KMS Provider: encrypt Secret
   KMS Provider->>KMS Plugin: hand off the DEK for encryption
   KMS Plugin->>KMS Server: encrypt DEK with KEK from KMS
   KMS Plugin->>KMS Provider: return encrypted DEK with KID
-  KMS Provider->>API Server: return encrypted DEK with KID
-  API Server->>etcd: store Secrets and DEK both encrypted
+  KMS Provider->>kube-apiserver: return encrypted DEK with KID
+  kube-apiserver->>etcd: store Secrets and DEK both encrypted
 ```
-```mermaid
-sequenceDiagram
-participant User
-participant etcd
-participant kube-apiserver
-participant EncryptionConfiguration
-autonumber
-  User->>kube-apiserver: create Secret
-  kube-apiserver->>EncryptionConfiguration: which provider?
-  EncryptionConfiguration->>kube-apiserver: identity
-  kube-apiserver->>etcd: store base64-encoded Secret
-```
+
+
 
 ```mermaid
 sequenceDiagram
