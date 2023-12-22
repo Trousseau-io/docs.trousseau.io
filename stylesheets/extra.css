@@ -1,0 +1,11 @@
+.md-grid {
+    max-width: 1980px;
+  }  
+
+[data-md-color-scheme="slate"] {
+  --md-hue: 210; 
+}
+
+.md-typeset video {
+  max-width: 100%;
+}

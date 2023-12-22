@@ -1,0 +1,7 @@
+---
+kube-apiserver-arg:
+  - "--encryption-provider-config=/var/lib/rancher/rke2/server/cred/trousseau-vault-encryptionconfiguration.yml" 
+kube-apiserver-extra-mount:
+  - "/opt/vault-kms:/opt/vault-kms"
+tls-san:
+  - FQDN      # replace with your cluster FQDN like cluster.mydomain.io or my.cluster.local
